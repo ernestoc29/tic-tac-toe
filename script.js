@@ -5,20 +5,20 @@ const Gameboard = (() => {
         "", "", ""
     ]
 
-    const getBoard = function() {
+    const getBoard = function () {
         return board;
     };
 
-    const placeMark = function (index, playerMark) {
+    const placeMark = function (index, playerMarker) {
         if (!board[index]) {
-            board[index] = playerMark;
+            board[index] = playerMarker;
             return true;
         } else {
             return false;
         }
     };
 
-    const reset = function() {
+    const reset = function () {
         board = [
             "", "", "",
             "", "", "",
@@ -29,4 +29,6 @@ const Gameboard = (() => {
     return { getBoard, placeMark, reset };
 })();
 
-const player
+function Player(name, marker) {
+    return { name, marker } 
+}
