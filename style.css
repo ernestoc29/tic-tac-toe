@@ -1,14 +1,49 @@
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .board {
     display: grid;
     width: 800px;
     height: 800px;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     padding: 15px;
     gap: 5px;
 }
 
 .square {
-    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    border: 1px solid rgba(0, 0, 0, 0.295);
     height: 1fr;
     width: 1fr;
+}
+
+.square:hover {
+    background-color: rgb(243, 241, 241);
+    transition: 0.3s background;
+}
+
+.win {
+    color: rgb(40, 228, 40);
+}
+
+.tie {
+    color: gray;
+}
+
+.hidden {
+    display: none;
 }
