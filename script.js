@@ -55,42 +55,30 @@ const Game = (() => {
         gameStatus = "playing";
 
         Gameboard.reset();
-
-        console.log("Game started")
     };
 
     const move = function (index) {
         if (gameStatus !== "playing") {
-            console.log("Game is over");
             return;
         };
 
         const playerMove = Gameboard.placeMarker(index, currentPlayer.marker);
 
         if (!playerMove) {
-            console.log("Invalid move")
-            console.log(Gameboard.getBoard());
             return false;
         }
 
-        console.log("Valid move");
-
         if (checkWin()) {
-            console.log(`${currentPlayer.name} wins`)
             gameStatus = "complete";
-            console.log(Gameboard.getBoard());
             return;
         } 
         
         if (checkTie()) {
-            console.log("Tie")
             gameStatus = "complete";
-            console.log(Gameboard.getBoard());
             return;
         }
 
         switchPlayers();
-        console.log(Gameboard.getBoard());
 
         return true;
     };
@@ -101,8 +89,6 @@ const Game = (() => {
         } else {
             currentPlayer = player1;
         }
-
-        console.log(`${currentPlayer.name}'s turn`)
     };
 
     const checkWin = function () {
@@ -123,5 +109,13 @@ const Game = (() => {
         return Gameboard.getBoard().every(square => square !== "")
     };
 
-    return { startGame, move, switchPlayers, checkWin, checkTie }
+    const getCurrentPlayer = function () {
+        return currentPlayer;
+    }
+
+    const getGameStatus = function () {
+        return gameStatus;
+    }
+
+    return { startGame, move, switchPlayers, checkWin, checkTie, getCurrentPlayer, getGameStatus }
 })();
