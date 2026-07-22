@@ -147,8 +147,7 @@ const DisplayController = (() => {
 
         squares.forEach(square => {
             square.addEventListener("click", () => {
-                (Game.move(square.dataset.index))
-                console.log("rendering board");
+                Game.move(square.dataset.index)
                 renderBoard();
                 displayInfo();
             })
@@ -166,23 +165,26 @@ const DisplayController = (() => {
         const playerMarker = Game.getCurrentPlayer().marker;
         const gameStatus = Game.getGameStatus();
 
-        const messages = document.querySelector(".message");
-
         const currentPlayerDisplay = document.querySelector(".current-player");
         const gameStatusDisplay = document.querySelector(".status");
 
         currentPlayerDisplay.textContent = `${playerName}'s turn. (${playerMarker})`
 
         if (gameStatus === "win") {
+            currentPlayerDisplay.textContent = "";
             gameStatusDisplay.classList.remove("hidden");
+            gameStatusDisplay.classList.remove("tie");
             gameStatusDisplay.classList.add("win");
-            gameStatusDisplay.textContent = `${playerName} (${playerMarker} wins!)`;
+            gameStatusDisplay.textContent = `${playerName} (${playerMarker}) wins!`;
         } else if (gameStatus === "tie") {
+            currentPlayerDisplay.textContent = "";
             gameStatusDisplay.classList.remove("hidden");
+            gameStatusDisplay.classList.remove("win");
             gameStatusDisplay.classList.add("tie");
             gameStatusDisplay.textContent = "Tie";
         } else {
             gameStatusDisplay.textContent = "";
+            gameStatusDisplay.classList.remove("win", "tie");
             gameStatusDisplay.classList.add("hidden");
         }
     }
