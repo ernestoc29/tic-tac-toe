@@ -69,12 +69,12 @@ const Game = (() => {
         }
 
         if (checkWin()) {
-            gameStatus = "complete";
+            gameStatus = "win";
             return "win";
         }
 
         if (checkTie()) {
-            gameStatus = "complete";
+            gameStatus = "tie";
             return "tie";
         }
 
@@ -143,17 +143,51 @@ const DisplayController = (() => {
 
     const addEventListeners = function () {
         const squares = document.querySelectorAll(".square");
+        const startBtn = document.querySelector(".start");
 
         squares.forEach(square => {
             square.addEventListener("click", () => {
                 (Game.move(square.dataset.index))
                 console.log("rendering board");
                 renderBoard();
+                displayInfo();
             })
-        })
+        });
+
+        startBtn.addEventListener("click", () => {
+            Game.startGame();
+            renderBoard();
+            displayInfo();
+        });
     }
 
-    return { createBoard, renderBoard, addEventListeners }
+    const displayInfo = function () {
+        const playerName = Game.getCurrentPlayer().name;
+        const playerMarker = Game.getCurrentPlayer().marker;
+        const gameStatus = Game.getGameStatus();
+
+        const messages = document.querySelector(".message");
+
+        const currentPlayerDisplay = document.querySelector(".current-player");
+        const gameStatusDisplay = document.querySelector(".status");
+
+        currentPlayerDisplay.textContent = `${playerName}'s turn. (${playerMarker})`
+
+        if (gameStatus === "win") {
+            gameStatusDisplay.classList.remove("hidden");
+            gameStatusDisplay.classList.add("win");
+            gameStatusDisplay.textContent = `${playerName} (${playerMarker} wins!)`;
+        } else if (gameStatus === "tie") {
+            gameStatusDisplay.classList.remove("hidden");
+            gameStatusDisplay.classList.add("tie");
+            gameStatusDisplay.textContent = "Tie";
+        } else {
+            gameStatusDisplay.textContent = "";
+            gameStatusDisplay.classList.add("hidden");
+        }
+    }
+
+    return { createBoard, renderBoard, addEventListeners, displayInfo }
 })();
 
 DisplayController.createBoard();
