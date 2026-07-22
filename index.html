@@ -10,11 +10,21 @@
 
 <body>
     <h1 class="title">Tic Tac Toe</h1>
+    <div class="name-selection">
+        <form action="#" class="names">
+            <label for="name1">Player 1 (X):</label>
+            <input id="name1" type="text" value="Player 1" required>
+
+            <label for="name2">Player 2 (O):</label>
+            <input id="name2" type="text" value="Player 2" required>
+
+            <button class="start">Start Game</button>
+        </form>
+    </div>
     <div class="messages">
         <p class="current-player"></p>
         <p class="status"></p>
     </div>
-    <button class="start">Start Game</button>
     <div class="board">
 
     </div>

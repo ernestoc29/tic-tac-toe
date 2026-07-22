@@ -47,9 +47,9 @@ const Game = (() => {
 
 
 
-    const startGame = function () {
-        player1 = Player("player1", "X");
-        player2 = Player("player2", "O");
+    const startGame = function (player1Name, player2Name) {
+        player1 = Player(player1Name, "X");
+        player2 = Player(player2Name, "O");
 
         currentPlayer = player1;
         gameStatus = "playing";
@@ -153,8 +153,17 @@ const DisplayController = (() => {
             })
         });
 
-        startBtn.addEventListener("click", () => {
-            Game.startGame();
+        startBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            const playerOneInput = document.getElementById("name1");
+            const playerTwoInput = document.getElementById("name2");
+
+            if (!playerOneInput.value || !playerTwoInput.value) {
+                return;
+            }
+
+            Game.startGame(playerOneInput.value, playerTwoInput.value);
             renderBoard();
             displayInfo();
         });
@@ -193,5 +202,4 @@ const DisplayController = (() => {
 })();
 
 DisplayController.createBoard();
-Game.startGame();
 DisplayController.addEventListeners();
