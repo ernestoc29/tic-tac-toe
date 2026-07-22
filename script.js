@@ -71,8 +71,8 @@ const Game = (() => {
         if (checkWin()) {
             gameStatus = "complete";
             return;
-        } 
-        
+        }
+
         if (checkTie()) {
             gameStatus = "complete";
             return;
@@ -118,4 +118,28 @@ const Game = (() => {
     }
 
     return { startGame, move, switchPlayers, checkWin, checkTie, getCurrentPlayer, getGameStatus }
+})();
+
+const DisplayController = (() => {
+    const createBoard = function () {
+        const display = document.querySelector(".board");
+
+        for (let i = 0; i < 9; i++) {
+            const square = document.createElement("div");
+            square.classList.add("square");
+            square.dataset.index = i;
+
+            display.appendChild(square);
+        }
+    };
+
+    const renderBoard = function () {
+        const squares = document.querySelectorAll(".square");
+
+        squares.forEach(square => {
+            square.textContent = Gameboard.getBoard()[square.dataset.index];
+        })
+    }
+
+    return { createBoard, renderBoard }
 })();
