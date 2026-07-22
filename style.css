@@ -1,0 +1,14 @@
+.board {
+    display: grid;
+    width: 800px;
+    height: 800px;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 15px;
+    gap: 5px;
+}
+
+.square {
+    border: 1px solid black;
+    height: 1fr;
+    width: 1fr;
+}

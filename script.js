@@ -65,17 +65,17 @@ const Game = (() => {
         const playerMove = Gameboard.placeMarker(index, currentPlayer.marker);
 
         if (!playerMove) {
-            return false;
+            return "invalid";
         }
 
         if (checkWin()) {
             gameStatus = "complete";
-            return;
+            return "win";
         }
 
         if (checkTie()) {
             gameStatus = "complete";
-            return;
+            return "tie";
         }
 
         switchPlayers();
@@ -141,5 +141,21 @@ const DisplayController = (() => {
         })
     }
 
-    return { createBoard, renderBoard }
+    const addEventListeners = function () {
+        const squares = document.querySelectorAll(".square");
+
+        squares.forEach(square => {
+            square.addEventListener("click", () => {
+                (Game.move(square.dataset.index))
+                console.log("rendering board");
+                renderBoard();
+            })
+        })
+    }
+
+    return { createBoard, renderBoard, addEventListeners }
 })();
+
+DisplayController.createBoard();
+Game.startGame();
+DisplayController.addEventListeners();
