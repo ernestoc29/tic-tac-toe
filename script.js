@@ -80,7 +80,7 @@ const Game = (() => {
 
         switchPlayers();
 
-        return true;
+        return "continue";
     };
 
     const switchPlayers = function () {
@@ -117,7 +117,7 @@ const Game = (() => {
         return gameStatus;
     }
 
-    return { startGame, move, switchPlayers, checkWin, checkTie, getCurrentPlayer, getGameStatus }
+    return { startGame, move, getCurrentPlayer, getGameStatus }
 })();
 
 const DisplayController = (() => {
@@ -147,9 +147,13 @@ const DisplayController = (() => {
 
         squares.forEach(square => {
             square.addEventListener("click", () => {
-                Game.move(square.dataset.index)
-                renderBoard();
-                displayInfo();
+                const result = Game.move(square.dataset.index)
+
+                if (result !== "invalid") {
+                    renderBoard();
+                    displayInfo();
+                }
+
             })
         });
 
@@ -162,6 +166,8 @@ const DisplayController = (() => {
             if (!playerOneInput.value || !playerTwoInput.value) {
                 return;
             }
+
+            startBtn.textContent = "Restart Game";
 
             Game.startGame(playerOneInput.value, playerTwoInput.value);
             renderBoard();
@@ -177,6 +183,8 @@ const DisplayController = (() => {
         const currentPlayerDisplay = document.querySelector(".current-player");
         const gameStatusDisplay = document.querySelector(".status");
 
+        const startBtn = document.querySelector(".start");
+
         currentPlayerDisplay.textContent = `${playerName}'s turn. (${playerMarker})`
 
         if (gameStatus === "win") {
@@ -185,12 +193,16 @@ const DisplayController = (() => {
             gameStatusDisplay.classList.remove("tie");
             gameStatusDisplay.classList.add("win");
             gameStatusDisplay.textContent = `${playerName} (${playerMarker}) wins!`;
+
+            startBtn.textContent = "New Game";
         } else if (gameStatus === "tie") {
             currentPlayerDisplay.textContent = "";
             gameStatusDisplay.classList.remove("hidden");
             gameStatusDisplay.classList.remove("win");
             gameStatusDisplay.classList.add("tie");
             gameStatusDisplay.textContent = "Tie";
+
+            startBtn.textContent = "New Game";
         } else {
             gameStatusDisplay.textContent = "";
             gameStatusDisplay.classList.remove("win", "tie");
